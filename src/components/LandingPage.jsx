@@ -1,6 +1,4 @@
 import { motion, AnimatePresence } from "framer-motion";
-import 'react-toastify/dist/ReactToastify.css';
-import { ToastContainer } from 'react-toastify';
 import React, { useState, useEffect } from "react";
 import {
   ResponsiveContainer,
@@ -235,14 +233,6 @@ export default function LandingPage() {
     }, 5000);
     return () => clearInterval(interval);
   }, []);
-  useEffect(() => {
-    fetch('http://localhost:3001/api/registrar-visitante', {
-      method: 'POST',
-    })
-      .then(res => res.json())
-      .then(data => console.log('Visitante registrado:', data.ip))
-      .catch(console.error);
-  }, []);
   async function getPublicIP() {
     try {
       const res = await fetch("https://api.ipify.org?format=json");
@@ -347,7 +337,6 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen bg-[#0B1120] text-[#F1F5F9] flex flex-col">
       <Header />
-      <ToastContainer />
       <main className="flex-grow">
         {/* Hero */}
         <section
