@@ -482,9 +482,9 @@ export default function LandingPage() {
             </div>
           </section>
         )}
-        <footer className="text-center justify-center">
-          <h2>© 2025. Projeto Acadêmico</h2>
-          <footer/>
+        <footer className="bg-[#0A0F1C] p-5 text-center justify-center">
+          <h2 className="text-[#38BDF8]">© 2025. Projeto Acadêmico</h2>
+        <footer/>
       </main>
     </div>
   );
