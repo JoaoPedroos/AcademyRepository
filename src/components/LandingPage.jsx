@@ -246,6 +246,10 @@ export default function LandingPage() {
   }
 
   async function handleClick() {
+    window.gtag('event', 'botao_clicado', {
+    event_category: 'interacao',
+    event_label: 'Botão Importante'
+      
     setMostrarAnalise(true);
     const ip = await getPublicIP();
     if (!ip) return;
