@@ -248,8 +248,6 @@ export default function LandingPage() {
     setMostrarAnalise(true);
     const ip = await getPublicIP();
     if (!ip) return;
-
-    toast.success('Obrigado pelo interesse!');
     
     const { data } = await supabase
       .from("cliques")
