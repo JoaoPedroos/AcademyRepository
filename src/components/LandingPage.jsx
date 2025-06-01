@@ -333,9 +333,9 @@ export default function LandingPage() {
   ];
 
   return (
-    <div className="min-h-full bg-[#0B1120] text-[#F1F5F9] flex flex-col">
+    <div className="min-h-screen bg-[#0B1120] text-[#F1F5F9] flex flex-col">
       <Header />
-      <main className="flex-grow min-h-full">
+      <main className="flex-grow">
         {/* Hero */}
         <section
           id="inicio"
@@ -482,10 +482,10 @@ export default function LandingPage() {
             </div>
           </section>
         )}
-        <footer className="bg-[#0A0F1C] p-10 text-center justify-center border-t border-[#1E293B]">
-          <h2 className="text-[#38BDF8]">© 2025. Projeto Acadêmico</h2>
-        </footer>
       </main>
     </div>
+    <footer className="bg-[#0A0F1C] p-10 text-center justify-center border-t border-[#1E293B]">
+        <h2 className="text-[#38BDF8]">© 2025. Projeto Acadêmico</h2>
+    </footer>
   );
 }
