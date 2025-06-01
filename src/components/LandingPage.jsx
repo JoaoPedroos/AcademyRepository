@@ -57,28 +57,28 @@ export function Header() {
           <a
             href="#inicio"
             className="hover:text-[#38BDF8]"
-            onClick={() => setMenuOpen(false)}  // FECHA MENU AO CLICAR
+            onClick={() => setMenuOpen(false)}
           >
             Início
           </a>
           <a
             href="#features"
             className="hover:text-[#38BDF8]"
-            onClick={() => setMenuOpen(false)}  // FECHA MENU AO CLICAR
+            onClick={() => setMenuOpen(false)}
           >
             Features
           </a>
           <a
             href="#galeria"
             className="hover:text-[#38BDF8]"
-            onClick={() => setMenuOpen(false)}  // FECHA MENU AO CLICAR
+            onClick={() => setMenuOpen(false)}
           >
             Galeria
           </a>
           <a
             href="#roadmap"
             className="hover:text-[#38BDF8]"
-            onClick={() => setMenuOpen(false)}  // FECHA MENU AO CLICAR
+            onClick={() => setMenuOpen(false)}
           >
             Roadmap
           </a>
@@ -203,6 +203,7 @@ export function Roadmap() {
   );
 }
 
+
 const frases = [
   "Colabore com sua equipe de forma simples e segura",
   "Repositórios privados para projetos universitários",
@@ -293,155 +294,197 @@ export default function LandingPage() {
     })();
   }, []);
 
-  const naoInteressados = visitCount - clickCount;
-  const porcentagemInteresse =
-    visitCount > 0 ? Math.round((clickCount / visitCount) * 100) : 0;
-
-  const dadosGraficoBarra = [
-    { nome: "Visitantes", valor: visitCount },
-    { nome: "Interessados", valor: clickCount },
+  const chartData = [{ name: "Cliques", value: clickCount }];
+  const pieData = [
+    { name: "Não Interessados", value: Math.max(0, visitCount - clickCount) },
+    { name: "Interessados", value: clickCount },
   ];
+  const COLORS = ["#8884d8", "#82ca9d"];
 
-  const dadosGraficoPizza = [
-    { name: "Interessados", value: clickCount, color: "#38BDF8" },
-    { name: "Não Interessados", value: naoInteressados, color: "#334155" },
+  // Ref para o carrossel galeria
+  const carouselRef = React.useRef(null);
+
+  React.useEffect(() => {
+    const carousel = carouselRef.current;
+    if (!carousel) return;
+
+    let scrollAmount = 0;
+    const scrollStep = 1; // pixels por intervalo
+    const delay = 20; // ms entre cada scroll
+
+    const maxScroll = carousel.scrollWidth - carousel.clientWidth;
+
+    const interval = setInterval(() => {
+      if (scrollAmount >= maxScroll) {
+        scrollAmount = 0;
+        carousel.scrollLeft = 0;
+      } else {
+        scrollAmount += scrollStep;
+        carousel.scrollLeft = scrollAmount;
+      }
+    }, delay);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const imagensGaleria = [
+    "/imagem/galeria1.png",
+    "/imagem/galeria2.png",
+    "/imagem/galeria3.png",
   ];
 
   return (
-    <>
+    <div className="min-h-screen bg-[#0B1120] text-[#F1F5F9] flex flex-col">
       <Header />
-      <section
-        id="inicio"
-        className="relative h-screen w-full overflow-hidden"
-        style={{
-          backgroundImage: `url(${imagensFundo[index]})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          filter: "brightness(0.4)",
-        }}
-      >
-        <div className="absolute inset-0 flex flex-col justify-center items-center text-center text-white px-4">
-          <AnimatePresence>
-            {fade && (
-              <motion.h2
-                key={index}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.5 }}
-                className="text-3xl md:text-5xl font-bold mb-4"
-              >
-                {frases[index]}
-              </motion.h2>
-            )}
-          </AnimatePresence>
-          <button
-            onClick={handleClick}
-            className="mt-6 rounded bg-[#38BDF8] px-6 py-3 font-semibold text-[#0F172A] hover:bg-[#0c8ad0] transition"
-          >
-            Quero ser um usuário
-          </button>
-        </div>
-      </section>
 
-      <section
-        id="features"
-        className="py-16 bg-[#0F172A] text-white max-w-7xl mx-auto px-6"
-      >
-        <h2 className="text-4xl font-bold text-center mb-12">
-          Por que usar o AcademyRepository?
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-          <div className="bg-[#1E293B] p-6 rounded-lg shadow-lg">
-            <h3 className="text-xl font-semibold mb-4">Simplicidade</h3>
-            <p>
-              Interface amigável para iniciantes em tecnologia, sem complexidades
-              desnecessárias.
-            </p>
-          </div>
-          <div className="bg-[#1E293B] p-6 rounded-lg shadow-lg">
-            <h3 className="text-xl font-semibold mb-4">Privacidade</h3>
-            <p>
-              Repositórios privados para garantir segurança e controle total dos
-              seus projetos.
-            </p>
-          </div>
-          <div className="bg-[#1E293B] p-6 rounded-lg shadow-lg">
-            <h3 className="text-xl font-semibold mb-4">Acesso rápido</h3>
-            <p>
-              Login simplificado e compartilhamento fácil com links curtos.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section
-        id="galeria"
-        className="py-16 bg-[#0A0F1C] text-white max-w-7xl mx-auto px-6"
-      >
-        <h2 className="text-4xl font-bold text-center mb-12">Galeria</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {imagensFundo.map((img, i) => (
-            <img
-              key={i}
-              src={img}
-              alt={`Imagem da galeria ${i + 1}`}
-              className="rounded-lg shadow-lg w-full object-cover h-64"
-            />
-          ))}
-        </div>
-      </section>
-
-      <Roadmap />
-
-      {mostrarAnalise && (
+      <main className="flex-grow">
+        {/* Hero */}
         <section
-          id="analise"
-          className="py-16 bg-[#0F172A] text-white max-w-7xl mx-auto px-6"
+          id="inicio"
+          className="relative min-h-[680px] flex flex-col justify-center items-center text-center "
         >
-          <h2 className="text-4xl font-bold text-center mb-8">
-            Análise de Interesse dos Visitantes
-          </h2>
-          <p className="text-center mb-12 text-[#94A3B8]">
-            Total de visitantes: {visitCount} <br />
-            Total de interessados: {clickCount} ({porcentagemInteresse}%)
-          </p>
+          <img
+            src={imagensFundo[index]}
+            alt="Imagem de fundo"
+            className={`absolute inset-0 w-full h-full object-cover opacity-30 transition-opacity duration-1000 ${fade ? "opacity-30" : "opacity-0"
+              }`}
+            aria-hidden="true"
+          />
+          <motion.h1
+            key={index}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.5 }}
+            className="text-4xl md:text-6xl font-bold max-w-4xl z-10"
+          >
+            {frases[index]}
+          </motion.h1>
+        </section>
+        <div id="features"></div>
+        <section className="absolute left-1/2  top-2/3 transform -translate-x-1/2 -translate-y-1/3">
+          <button
+            id="botaocq"
+            className="bg-[#38BDF8] hover:bg-[#0ea5e9] text-[#0B1120] font-bold py-3 px-6 rounded-md transition"
+            onClick={handleClick}
+          >
+            Começar Agora
+          </button>
+        </section>
 
-          <div className="flex flex-col md:flex-row justify-center items-center gap-12">
-            <ResponsiveContainer width={300} height={300}>
-              <BarChart data={dadosGraficoBarra} margin={{ top: 20, right: 20, left: 0, bottom: 5 }}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="nome" />
-                <YAxis allowDecimals={false} />
-                <Tooltip />
-                <Bar dataKey="valor" fill="#38BDF8" />
-              </BarChart>
-            </ResponsiveContainer>
-
-            <ResponsiveContainer width={300} height={300}>
-              <PieChart>
-                <Pie
-                  data={dadosGraficoPizza}
-                  cx="50%"
-                  cy="50%"
-                  labelLine={false}
-                  label={({ name, percent }) =>
-                    `${name}: ${(percent * 100).toFixed(0)}%`
-                  }
-                  outerRadius={100}
-                  fill="#8884d8"
-                  dataKey="value"
-                >
-                  {dadosGraficoPizza.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={entry.color} />
-                  ))}
-                </Pie>
-                <Legend />
-              </PieChart>
-            </ResponsiveContainer>
+        {/* Features */}
+        <section className="bg-[#0A0F1C] py-16 px-6">
+          <div className="max-w-5xl mx-auto grid md:grid-cols-3 gap-8 text-center">
+            <div>
+              <h3 className="text-xl font-semibold text-[#38BDF8] mb-2">Comece em segundos</h3>
+              <p className="text-[#94A3B8]">Sem burocracia ou configurações avançadas.</p>
+            </div>
+            <div>
+              <h3 className="text-xl font-semibold text-[#38BDF8] mb-2">Compartilhe com um link</h3>
+              <p className="text-[#94A3B8]">Convide colegas com um link curto e seguro.</p>
+            </div>
+            <div>
+              <h3 className="text-xl font-semibold text-[#38BDF8] mb-2">Ambiente Privado</h3>
+              <p className="text-[#94A3B8]">Mantenha seus projetos protegidos e organizados.</p>
+            </div>
+            <div>
+              <h3 className="text-xl font-semibold text-[#38BDF8] mb-2">Uploads via navegador (sem Git)</h3>
+              <p className="text-[#94A3B8]">Arrasta e solta arquivos ou zip para subir seus arquivos.</p>
+            </div>
+            <div>
+              <h3 className="text-xl font-semibold text-[#38BDF8] mb-2">Baixa barreira de entrada</h3>
+              <p className="text-[#94A3B8]">Login simples (sem e-mail) é ótimo para iniciantes que não querem lidar com burocracia.</p>
+            </div>
+            <div>
+              <h3 className="text-xl font-semibold text-[#38BDF8] mb-2">Foco no público iniciante</h3>
+              <p className="text-[#94A3B8]">Você pode ajudar quem ainda está aprendendo a estruturar um projeto, entender o que é commit, versionamento etc</p>
+            </div>
           </div>
         </section>
-      )}
-    </>
+        {/* Galeria de Imagens do Projeto - Carrossel automático */}
+        <section id="galeria" className="bg-[#0B1120] py-16 px-6">
+          <div className="max-w-5xl mx-auto text-center">
+            <h3 className="text-2xl font-bold text-[#38BDF8] mb-4">
+              Galeria do Projeto
+            </h3>
+            <p className="text-[#94A3B8] mb-8">Imagens Ilustrativas do Projeto!</p>
+
+            <div
+              ref={carouselRef}
+              className="flex flex-col sm:flex-row sm:space-x-6 space-y-6 sm:space-y-0 overflow-hidden items-center sm:items-stretch"
+              style={{ scrollBehavior: "smooth" }}
+            >
+              {imagensGaleria.map((src, idx) => (
+                <motion.div
+                  key={idx}
+                  className="w-full sm:min-w-[300px] rounded-xl overflow-hidden bg-[#1E293B]"
+                  whileHover={{ scale: 1.05, rotate: 2 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <img
+                    src={src}
+                    alt={`Imagem do Projeto ${idx + 1}`}
+                    className="w-full h-60 object-cover rounded-xl"
+                    draggable={false}
+                  />
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Roadmap */}
+        <Roadmap />
+
+        {/* Análise de dados */}
+        {mostrarAnalise && (
+          <section
+            id="analise"
+            className="max-w-5xl mx-auto my-16 p-8 bg-[#0F172A] rounded-xl"
+          >
+            <h3 className="text-3xl font-bold text-[#38BDF8] mb-6 text-center">
+              Análise de Cliques e Visitantes
+            </h3>
+
+            <div className="flex flex-col md:flex-row justify-around items-center gap-8">
+              <div className="w-full md:w-1/2 h-64">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={chartData}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="name" />
+                    <YAxis allowDecimals={false} />
+                    <Tooltip />
+                    <Bar dataKey="value" fill="#38BDF8" />
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+
+              <div className="w-full md:w-1/2 h-64">
+                <ResponsiveContainer width="100%" height="100%">
+                  <PieChart>
+                    <Pie
+                      data={pieData}
+                      dataKey="value"
+                      nameKey="name"
+                      cx="50%"
+                      cy="50%"
+                      outerRadius={80}
+                      fill="#8884d8"
+                      label
+                    >
+                      {pieData.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                      ))}
+                    </Pie>
+                    <Legend />
+                    <Tooltip />
+                  </PieChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
+          </section>
+        )}
+      </main>
+    </div>
   );
 }
