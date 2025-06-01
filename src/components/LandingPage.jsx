@@ -1,4 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 import React, { useState, useEffect } from "react";
 import {
   ResponsiveContainer,
@@ -257,6 +259,8 @@ export default function LandingPage() {
     const ip = await getPublicIP();
     if (!ip) return;
 
+    toast.success('Obrigado pelo interesse!');
+    
     const { data } = await supabase
       .from("cliques")
       .select("ip")
@@ -343,7 +347,7 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen bg-[#0B1120] text-[#F1F5F9] flex flex-col">
       <Header />
-
+      <ToastContainer />
       <main className="flex-grow">
         {/* Hero */}
         <section
