@@ -233,7 +233,14 @@ export default function LandingPage() {
     }, 5000);
     return () => clearInterval(interval);
   }, []);
-
+  useEffect(() => {
+    fetch('http://localhost:3001/api/registrar-visitante', {
+      method: 'POST',
+    })
+      .then(res => res.json())
+      .then(data => console.log('Visitante registrado:', data.ip))
+      .catch(console.error);
+  }, []);
   async function getPublicIP() {
     try {
       const res = await fetch("https://api.ipify.org?format=json");
