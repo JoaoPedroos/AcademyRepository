@@ -333,7 +333,7 @@ export default function LandingPage() {
   ];
 
   return (
-    <div className="min-h-100vh bg-[#0B1120] text-[#F1F5F9] flex flex-col">
+    <div className="min-h-screen bg-[#0B1120] text-[#F1F5F9] flex flex-col">
       <Header />
       <main className="flex-grow">
         {/* Hero */}
@@ -483,7 +483,7 @@ export default function LandingPage() {
           </section>
         )}
       </main>
-      <footer className="bg-[#0A0F1C] p-10 text-center justify-center border-t border-[#1E293B]">
+      <footer className="mt-auto bg-[#0A0F1C] p-10 text-center justify-center border-t border-[#1E293B]">
         <h2 className="text-[#38BDF8]">© 2025. Projeto Acadêmico</h2>
     </footer>
     </div>
