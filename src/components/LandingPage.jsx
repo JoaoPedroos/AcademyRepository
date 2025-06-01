@@ -333,7 +333,7 @@ export default function LandingPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#0B1120] text-[#F1F5F9] flex flex-col">
+    <div className="min-h-100vh bg-[#0B1120] text-[#F1F5F9] flex flex-col">
       <Header />
       <main className="flex-grow">
         {/* Hero */}
