@@ -441,7 +441,7 @@ export default function LandingPage() {
             className="max-w-5xl mx-auto my-16 p-8 bg-[#0F172A] rounded-xl"
           >
             <h3 className="text-3xl font-bold text-[#38BDF8] mb-6 text-center">
-              Análise de Cliques e Visitantes
+              Análise de Interesse
             </h3>
 
             <div className="flex flex-col md:flex-row justify-around items-center gap-8">
