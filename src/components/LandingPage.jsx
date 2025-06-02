@@ -94,7 +94,7 @@ export function Roadmap() {
       fase: "Fase 1: Estrutura Inicial",
       status: "concluida",
       tarefas: [
-        { tarefa: "🖼️ Landing page com carrossel", concluida: true },
+        { tarefa: "🖼️ Landing page", concluida: true },
         { tarefa: "🧩 Seção de Informativos", concluida: true },
         { tarefa: "🖼️ Galeria de imagens ilustrativas", concluida: true },
         { tarefa: "🔍 Pesquisa de Aceitação de Produto", concluida: true },
